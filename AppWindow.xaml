@@ -1,0 +1,114 @@
+﻿<Window x:Class="NITHmouseController.AppWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NITHmouseController"
+        mc:Ignorable="d"
+        Title="NITHmouseController" Height="600" Width="777" Loaded="Window_Loaded" Closed="Window_Closed">
+    <Canvas Background="#222222">
+        <!-- Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions-->
+        <Label Content="HeadTracker" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnScanHT" Content="Scan" HorizontalAlignment="Left" Height="25" VerticalAlignment="Center" Width="60" Canvas.Left="102" Canvas.Top="10" RenderTransformOrigin="0.5,0.5" Click="btnScanHT_Click"/>
+        <Label Content="Status:" HorizontalAlignment="Left" Margin="10,39,0,0" VerticalAlignment="Top"/>
+        <Border Style="{StaticResource BlackBorder}" Canvas.Left="66" Canvas.Top="39">
+            <TextBlock x:Name="txtConnectedHT" Style="{StaticResource WhiteText}" HorizontalAlignment="Center" Text="Not connected"/>
+        </Border>
+        <Label Content="Port:" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.028,0.455" Canvas.Left="172" Canvas.Top="38"/>
+        <Border Style="{StaticResource BlackBorder}" Canvas.Left="220" Canvas.Top="38" HorizontalAlignment="Left" VerticalAlignment="Top" Width="27">
+            <TextBlock Style="{StaticResource WhiteText}" HorizontalAlignment="Center" Text="11" x:Name="txtPortHT" />
+        </Border>
+        <Label Content="FaceCam" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="271" Canvas.Top="9"/>
+        <Label Content="Status:" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="271" Canvas.Top="38"/>
+        <Border Style="{StaticResource BlackBorder}" Canvas.Left="332" Canvas.Top="38" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <TextBlock x:Name="txtConnectedFC" Style="{StaticResource WhiteText}" HorizontalAlignment="Center" Text="Not connected"/>
+        </Border>
+        <Border Style="{StaticResource BlackBorder}" Canvas.Left="15" Canvas.Top="71" Height="197" Width="232">
+            <TextBlock x:Name="txtValuesHT" Style="{StaticResource WhiteText}" Text="waiting for HeadTracker values..."/>
+        </Border>
+        <Border Style="{StaticResource BlackBorder}" Canvas.Left="271" Canvas.Top="70" Height="197" Width="232" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <TextBlock x:Name="txtValuesFC" Style="{StaticResource WhiteText}" Text="waiting for FaceCam values..."/>
+        </Border>
+        <Canvas x:Name="cnvHeadTrackerPlot" Background="Black" Height="232" Width="232" Canvas.Left="15" Canvas.Top="292" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <Ellipse x:Name="dotPitchRoll" Fill="Green" Width="15" Height="15" />
+            <Ellipse x:Name="dotPitchYaw" Fill="White" Width="15" Height="15" />
+        </Canvas>
+        <Button Content="Center" Height="25" Width="50" Canvas.Left="277" Canvas.Top="321" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.088,0.407" Click="btnCenter_Click"/>
+        <Button Name="btnTopLeft" Content="Top left" Height="25" Width="50" Canvas.Left="338" Canvas.Top="321" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnTopLeft_Click"/>
+        <Button Name="btnBottomRight" Content="Bottom right" Height="25" Width="80" Canvas.Left="400" Canvas.Top="321" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnBottomRight_Click"/>
+        <Button Name="btnCalibrationOpen" Click="btnCalibrationOpen_Click" Content="Open" Height="25" Width="50" Canvas.Left="278" Canvas.Top="425" RenderTransformOrigin="0.088,0.407" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button Name="btnCalibrationClosed" Click="btnCalibrationClosed_Click" Content="Closed" Height="25" Width="50" Canvas.Left="339" Canvas.Top="425" RenderTransformOrigin="0.088,0.407" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label Content="Movement filter" Canvas.Left="272" Canvas.Top="359" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Label Content="Head calibration" Canvas.Left="271" Canvas.Top="292" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Label Content="Calibration" Canvas.Left="272" Canvas.Top="396" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Border Style="{StaticResource BlackBorder}" Canvas.Left="419" Canvas.Top="359" Width="37" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <TextBlock Style="{StaticResource WhiteText}" HorizontalAlignment="Center" Text="0.00"/>
+        </Border>
+        <Button Content="-" Name="btnFilterMinus" Click="btnFilterMinus_Click"  Height="25" Width="27" Canvas.Left="387" Canvas.Top="358" RenderTransformOrigin="0.518,0.375" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Button Content="+" Name="btnFilterPlus" Click="btnFilterPlus_Click" Height="25" Width="27" Canvas.Left="461" Canvas.Top="358" RenderTransformOrigin="0.518,0.375" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Ellipse x:Name="indEmulateCursor" Width="20" Height="20" Stroke="White" StrokeThickness="2" Fill="DarkRed" Canvas.Left="400" Canvas.Top="466" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Ellipse.Clip>
+                <EllipseGeometry RadiusX="40" RadiusY="40" Center="20,20" />
+            </Ellipse.Clip>
+        </Ellipse>
+        <Button Name="btnCursorEmulation" Content="Cursor emulation" Height="24" Width="111" Canvas.Left="277" Canvas.Top="464" HorizontalAlignment="Left" VerticalAlignment="Center" Click="btnCursorEmulation_Click"/>
+        <Ellipse Name="ellEyeLeft" StrokeThickness="2" Height="25" Canvas.Left="406" Stroke="White" Canvas.Top="425" Width="34" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Ellipse Name="ellEyeRight" StrokeThickness="2" Height="25" Canvas.Left="445" Stroke="White" Canvas.Top="425" Width="34" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Border Style="{StaticResource BlackBorder}" Canvas.Left="525" Canvas.Top="70" Height="197" Width="232" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <ScrollViewer x:Name="scrConsole" VerticalScrollBarVisibility="Auto">
+                <TextBlock x:Name="txtConsole" Style="{StaticResource WhiteText}" Text="txtMiniConsoleTest" TextWrapping="Wrap"/>
+            </ScrollViewer>
+        </Border>
+        <Label Content="Messages" Canvas.Left="525" Canvas.Top="11" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Ellipse x:Name="indCalibrated" Width="20" Height="20" Stroke="White" StrokeThickness="2" Fill="DarkRed" Canvas.Left="485" Canvas.Top="324" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Ellipse.Clip>
+                <EllipseGeometry RadiusX="40" RadiusY="40" Center="20,20" />
+            </Ellipse.Clip>
+        </Ellipse>
+        <Button x:Name="btnClickEmulation" Content="Blink clicking" Height="24" Width="111" Canvas.Left="277" Canvas.Top="500" HorizontalAlignment="Center" VerticalAlignment="Top" Click="btnClickEmulation_Click"/>
+        <Ellipse x:Name="indEmulateClicks" Width="20" Height="20" Stroke="White" StrokeThickness="2" Fill="DarkRed" Canvas.Left="400" Canvas.Top="500" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <Ellipse.Clip>
+                <EllipseGeometry RadiusX="40" RadiusY="40" Center="20,20" />
+            </Ellipse.Clip>
+        </Ellipse>
+        <Button x:Name="btnLoad" Content="Load Calib" Height="24" Width="80" Canvas.Left="525" Canvas.Top="322" Click="btnBottomRight_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Button x:Name="btnSave" Content="Save Calib" Height="25" Width="80" Canvas.Left="614" Canvas.Top="321" Click="btnBottomRight_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Button Content="Test" Height="25" Width="50" Name="btnTest" Canvas.Left="704" Canvas.Top="11" RenderTransformOrigin="0.088,0.407" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnTest_Click"/>
+        <Label Content="Movement filter" Canvas.Left="272" Canvas.Top="359" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Border Style="{StaticResource BlackBorder}" Canvas.Left="419" Canvas.Top="359" Width="37" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Name="txtFilter" Style="{StaticResource WhiteText}" HorizontalAlignment="Center" Text="0.00"/>
+        </Border>
+        <Button Content="-" x:Name="btnFilterMinus_Copy" Click="btnFilterMinus_Click"  Height="25" Width="27" Canvas.Left="387" Canvas.Top="358" RenderTransformOrigin="0.518,0.375" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Content="+" x:Name="btnFilterPlus_Copy" Click="btnFilterPlus_Click" Height="25" Width="27" Canvas.Left="461" Canvas.Top="358" RenderTransformOrigin="0.518,0.375" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label Content="Sensitivity" Canvas.Left="526" Canvas.Top="360" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Border Style="{StaticResource BlackBorder}" Canvas.Left="648" Canvas.Top="359" Width="37" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Name="txtSensitivity" Style="{StaticResource WhiteText}" HorizontalAlignment="Center" Text="0.00"/>
+        </Border>
+        <Button Content="-" x:Name="btnSensitivityMinus" Click="btnSensitivityMinus_Click" Height="25" Width="27" Canvas.Left="616" Canvas.Top="358" RenderTransformOrigin="0.518,0.375" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button Content="+" x:Name="btnSensitivityPlus" Click="btnSensitivityPlus_Click" Height="25" Width="27" Canvas.Left="690" Canvas.Top="358" RenderTransformOrigin="0.518,0.375" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button x:Name="btnForceReconnectUDP" Content="Force Reconnect" Height="25" Width="99" Canvas.Left="406" Canvas.Top="11" RenderTransformOrigin="0.5,0.5" Click="btnForceReconnectUDP_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Ellipse x:Name="indFCconnected" Width="20" Height="20" Stroke="White" StrokeThickness="2" Fill="DarkRed" Canvas.Left="332" Canvas.Top="12" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Ellipse.Clip>
+                <EllipseGeometry RadiusX="40" RadiusY="40" Center="20,20" />
+            </Ellipse.Clip>
+        </Ellipse>
+        <Ellipse x:Name="ellMouth" StrokeThickness="2" Height="25" Canvas.Left="484" Stroke="DarkRed" Canvas.Top="425" Width="34" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Button x:Name="btnMouthClicking" Content="Mouth clicking" Height="24" Width="110" Canvas.Left="438" Canvas.Top="498" Click="BtnMouthClicking_OnClick"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Ellipse x:Name="indMouthClicking" Width="20" Height="20" Stroke="White" StrokeThickness="2" Fill="DarkRed" Canvas.Left="557" Canvas.Top="498" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Ellipse.Clip>
+                <EllipseGeometry RadiusX="40" RadiusY="40" Center="20,20" />
+            </Ellipse.Clip>
+        </Ellipse>
+        <Label Content="Mouse button" Canvas.Left="535" Canvas.Top="425" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Border Style="{StaticResource BlackBorder}" Canvas.Left="629" Canvas.Top="425" Width="37" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock x:Name="txtMouseButton" Style="{StaticResource WhiteText}" HorizontalAlignment="Center"><Run Language="it-it" Text="L"/></TextBlock>
+        </Border>
+    </Canvas>
+</Window>
