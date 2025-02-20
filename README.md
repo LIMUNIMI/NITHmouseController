@@ -1,6 +1,7 @@
 # NITHmouseController
 _An application for hands-free mouse control and emulation using a webcam (and NITHsensors)_
 
+<br>
 <p align="center">
   <img src="https://raw.githubusercontent.com/LIMUNIMI/NITHmouseController/main/NithLogo_White_Trace.png" alt="NITH logo." width="150px"/>
 </p>
