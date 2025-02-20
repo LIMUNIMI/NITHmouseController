@@ -42,24 +42,24 @@ namespace NITHmouseController.Elements
             cbxArg.SelectedIndex = 0;
         }
 
-        public NithParameters Argument { get; private set; } = NithParameters.NaP;
+        public NithParameters Parameter { get; private set; } = NithParameters.NaP;
 
         public double Max { get; private set; } = 100;
 
         public double Min { get; private set; } = 0;
 
-        public NithArgumentValue NithArgVal { get; private set; } = new NithArgumentValue(NithParameters.NaP, "");
+        public NithParameterValue NithArgVal { get; private set; } = new NithParameterValue(NithParameters.NaP, "");
         public double Offset { get; private set; } = 0;
 
         public ProgressBar PrbGauge { get; private set; }
 
         public bool UseProp { get; private set; } = false;
 
-        public void ReceiveArgs(List<NithArgumentValue> values)
+        public void ReceiveArgs(List<NithParameterValue> values)
         {
-            foreach (NithArgumentValue v in values)
+            foreach (NithParameterValue v in values)
             {
-                if (v.Argument == Argument)
+                if (v.Parameter == Parameter)
                 {
                     NithArgVal = v;
                 }
@@ -72,7 +72,7 @@ namespace NITHmouseController.Elements
             {
                 if (UseProp && NithArgVal.Type == NithDataTypes.BaseAndMax)
                 {
-                    PrbGauge.Value = NithArgVal.Proportional + Offset;
+                    PrbGauge.Value = NithArgVal.Normalized + Offset;
                 }
                 else
                 {
@@ -88,7 +88,7 @@ namespace NITHmouseController.Elements
 
         private void CbxArg_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Argument = (NithParameters)Enum.Parse(typeof(NithParameters), _cbxArg.SelectedItem.ToString());
+            Parameter = (NithParameters)Enum.Parse(typeof(NithParameters), _cbxArg.SelectedItem.ToString());
         }
 
         private void ChkUseProp_Checked(object sender, System.Windows.RoutedEventArgs e)

@@ -50,14 +50,14 @@ namespace NITHmouseController.Old
             };
         }
 
-        public void ParseAutomaticallyFromNithValues(List<NithArgumentValue> args)
+        public void ParseAutomaticallyFromNithValues(List<NithParameterValue> args)
         {
             _posY = _posP = _posR = 0;
             _accY = _accP = _accR = 0;
 
-            foreach (NithArgumentValue arg in args)
+            foreach (NithParameterValue arg in args)
             {
-                switch (arg.Argument)
+                switch (arg.Parameter)
                 {
                     case NithParameters.head_pos_yaw: _posY = arg.BaseAsDouble; break;
                     case NithParameters.head_pos_pitch: _posP = arg.BaseAsDouble; break;

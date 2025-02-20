@@ -16,9 +16,9 @@ namespace NITHmouseController.Behaviors
             _argumentStr = "";
             if(nithData.Values != null)
             {
-                foreach (NithArgumentValue val in nithData.Values)
+                foreach (NithParameterValue val in nithData.Values)
                 {
-                    _argumentStr += AddWhiteSpaces(val.Argument.ToString());
+                    _argumentStr += AddWhiteSpaces(val.Normalized.ToString());
                     _argumentStr += "v: ";
                     if (val.Type == NithDataTypes.OnlyBase)
                     {
@@ -26,7 +26,7 @@ namespace NITHmouseController.Behaviors
                     }
                     else if (val.Type == NithDataTypes.BaseAndMax)
                     {
-                        _argumentStr += val.Base + " / " + val.Max + "\tp: " + val.Proportional.ToString("F2");
+                        _argumentStr += val.Base + " / " + val.Max + "\tp: " + val.Normalized.ToString("F2");
                     }
                     _argumentStr += "\n";
                 }

@@ -1,4 +1,4 @@
-﻿using NITHlibrary.Nith.Behaviors;
+﻿using NITHlibrary.Nith.BehaviorTemplates;
 using NITHmouseController.Modules;
 
 namespace NITHmouseController.Behaviors
@@ -7,7 +7,7 @@ namespace NITHmouseController.Behaviors
     {
         public BBlinkCalibrateWithDoubleBlink()
         {
-            DcThresh = 10;
+            DCThresh = 10;
         }
 
         protected override void Event_doubleClose()

@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Forms;
 
 namespace NITHmouseController.Elements
 {
@@ -7,9 +6,8 @@ namespace NITHmouseController.Elements
     {
         public MouseCalibratorCenterMethod()
         {
-            var screen = Screen.PrimaryScreen;
-            ScreenWidth = screen.Bounds.Width;
-            ScreenHeight = screen.Bounds.Height;
+            ScreenWidth = (int)SystemParameters.PrimaryScreenWidth;
+            ScreenHeight = (int)SystemParameters.PrimaryScreenHeight;
         }
 
         public float CurrentX { get; set; } = 0;

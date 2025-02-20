@@ -1,15 +1,15 @@
 ﻿using NITHmouseController.Modules;
-using NITHlibrary.Nith.Behaviors;
 using NITHlibrary.Nith.Internals;
 using NITHlibrary.Nith.Module;
+using NITHlibrary.Nith.BehaviorTemplates;
 
 namespace NITHmouseController.Behaviors
 {
-    internal class BNithHtErrorHandler : AStandardNithErrorStringBehavior
+    internal class BNithHtErrorHandler : ANithErrorToStringBehavior
     {
         private string _lastErrorString = "";
 
-        public BNithHtErrorHandler(INithModule nithModule) : base(nithModule)
+        public BNithHtErrorHandler(NithModule nithModule) : base(nithModule)
         {
         }
 

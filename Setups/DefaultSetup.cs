@@ -1,10 +1,9 @@
-﻿using NITHdmis.Modules.Keyboard;
-using NITHdmis.Modules.Mouse;
+﻿using NITHemulation.Modules.Keyboard;
 using NITHlibrary.Nith.Internals;
 using NITHlibrary.Nith.Module;
 using NITHlibrary.Nith.PortDetector;
 using NITHlibrary.Nith.Preprocessors;
-using NITHlibrary.Nith.Wrappers.NithFaceCam;
+using NITHlibrary.Nith.Wrappers.NithWebcamWrapper;
 using NITHlibrary.Tools.Ports;
 using NITHmouseController.Behaviors;
 using NITHmouseController.Elements;
@@ -50,10 +49,9 @@ namespace NITHmouseController.Setups
             Rack.NithModuleHeadTracker = new NithModule();
             Rack.NithModuleFaceCam = new NithModule();
             Rack.DataManagerModule = new DataManagerModule();
-            Rack.MouseModule = new MouseModule();
             Rack.MouseCalibratorTwoEdgesMethod = new MouseCalibratorTwoEdgesMethod();
             Rack.MouseCalibratorCenterMethod = new MouseCalibratorCenterMethod();
-            Rack.KeyboardModule = new KeyboardModuleWPF(new WindowInteropHelper(Window).Handle, RawInputCaptureMode.ForegroundAndBackground);
+            Rack.KeyboardModule = new KeyboardModuleWPF(Window, RawInputCaptureMode.ForegroundAndBackground);
 
             // Head tracker plotter
             Rack.HeadTrackerPlotterNoElements = new BNithHeadTrackerPlotter
@@ -64,10 +62,10 @@ namespace NITHmouseController.Setups
                 );
 
             // Preprocessors
-            Rack.NithPreprocessorFaceCam = new NithPreprocessor_FaceCam(NithFaceCamCalibrationModes.Manual);
+            Rack.NithPreprocessorFaceCam = new NithPreprocessor_WebcamWrapper(NithWebcamCalibrationModes.Manual);
             List<NithParameters> eyeApertureParams = new List<NithParameters>() { NithParameters.eyeLeft_ape, NithParameters.eyeRight_ape };
 
-            Rack.NithModuleFaceCam.Preprocessors.Add(new NithPreprocessor_MaFilterParams(eyeApertureParams, 0.8f));
+            Rack.NithModuleFaceCam.Preprocessors.Add(new NithPreprocessor_MAfilterParams(eyeApertureParams, 0.8f));
             Rack.NithModuleFaceCam.Preprocessors.Add(Rack.NithPreprocessorFaceCam);
             Rack.NithPreprocessorHeadTrackerCalibrator = new NithPreprocessor_HeadTrackerCalibrator();
             Rack.NithModuleHeadTracker.Preprocessors.Add(Rack.NithPreprocessorHeadTrackerCalibrator);
@@ -75,8 +73,8 @@ namespace NITHmouseController.Setups
             // Make port managers and connect NithModules
             Rack.UsBreceiver = new USBreceiver();
             Rack.UsBreceiver.Listeners.Add(Rack.NithModuleHeadTracker);
-            Rack.UsBportDetector = new NithUsBportDetector();
-            Rack.UsBportDetector.Behaviors.Add(new BNithUSBportDetector_ConnectToPort(Rack.UsBreceiver, "NithHT_BNO055"));
+            Rack.UsBportDetector = new NithUSBportDetector();
+            Rack.UsBportDetector.Behaviors.Add(new BUSBreceiver_ConnectToPort(Rack.UsBreceiver, "NithHT_BNO055"));
 
             Rack.UDPreceiverFaceCam = new UDPreceiver(20100);
             Rack.UDPreceiverFaceCam.Listeners.Add(Rack.NithModuleFaceCam);
@@ -86,7 +84,6 @@ namespace NITHmouseController.Setups
             Disposables.Add(Rack.RenderingModule);
             Disposables.Add(Rack.NithModuleFaceCam);
             Disposables.Add(Rack.NithModuleHeadTracker);
-            Disposables.Add(Rack.MouseModule);
             Disposables.Add(Rack.UsBreceiver);
             Disposables.Add(Rack.UDPreceiverFaceCam);
 
@@ -115,8 +112,6 @@ namespace NITHmouseController.Setups
 
             // You will probably want to leave this at the end!
             Rack.RenderingModule.StartRendering();
-
-            Rack.MouseModule.StartPolling();
         }
     }
 }

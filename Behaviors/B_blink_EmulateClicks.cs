@@ -1,5 +1,5 @@
-﻿using NITHdmis.Modules.Mouse;
-using NITHlibrary.Nith.Behaviors;
+﻿using NITHemulation.Modules.Mouse;
+using NITHlibrary.Nith.BehaviorTemplates;
 using NITHmouseController.Modules;
 
 namespace NITHmouseController.Behaviors
@@ -9,12 +9,12 @@ namespace NITHmouseController.Behaviors
 
         public BBlinkEmulateClicks()
         {
-            DcThresh = 8;
-            DoThresh = 8;
-            RcThresh = 3;
-            RoThresh = 3;
-            LcThresh = 3;
-            LoThresh = 3;
+            DCThresh = 8;
+            DOThresh = 8;
+            RCThresh = 3;
+            ROThresh = 3;
+            LCThresh = 3;
+            LOThresh = 3;
         }
 
         protected override void Event_doubleClose() // Send double click
@@ -22,10 +22,10 @@ namespace NITHmouseController.Behaviors
             if (Rack.UserSettings.BlinkClicking)
             {
 
-                Rack.MouseModule.SendMouseButtonEvent(MouseButtonFlags.LeftDown);
-                Rack.MouseModule.SendMouseButtonEvent(MouseButtonFlags.LeftUp);
-                Rack.MouseModule.SendMouseButtonEvent(MouseButtonFlags.LeftDown);
-                Rack.MouseModule.SendMouseButtonEvent(MouseButtonFlags.LeftUp);
+                MouseSender.SendMouseButtonEvent(MouseButtonFlags.LeftDown);
+                MouseSender.SendMouseButtonEvent(MouseButtonFlags.LeftUp);
+                MouseSender.SendMouseButtonEvent(MouseButtonFlags.LeftDown);
+                MouseSender.SendMouseButtonEvent(MouseButtonFlags.LeftUp);
             }
         }
 
@@ -38,7 +38,7 @@ namespace NITHmouseController.Behaviors
         {
             if (Rack.UserSettings.BlinkClicking)
             {
-                Rack.MouseModule.SendMouseButtonEvent(MouseButtonFlags.LeftDown);
+                MouseSender.SendMouseButtonEvent(MouseButtonFlags.LeftDown);
             }
         }
 
@@ -46,7 +46,7 @@ namespace NITHmouseController.Behaviors
         {
             if (Rack.UserSettings.BlinkClicking)
             {
-                Rack.MouseModule.SendMouseButtonEvent(MouseButtonFlags.LeftUp);
+                MouseSender.SendMouseButtonEvent(MouseButtonFlags.LeftUp);
             }
         }
 
@@ -54,7 +54,7 @@ namespace NITHmouseController.Behaviors
         {
             if (Rack.UserSettings.BlinkClicking)
             {
-                Rack.MouseModule.SendMouseButtonEvent(MouseButtonFlags.RightDown);
+                MouseSender.SendMouseButtonEvent(MouseButtonFlags.RightDown);
             }
         }
 
@@ -62,7 +62,7 @@ namespace NITHmouseController.Behaviors
         {
             if (Rack.UserSettings.BlinkClicking)
             {
-                Rack.MouseModule.SendMouseButtonEvent(MouseButtonFlags.RightUp);
+                MouseSender.SendMouseButtonEvent(MouseButtonFlags.RightUp);
             }
         }
     }

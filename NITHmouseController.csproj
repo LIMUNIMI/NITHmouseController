@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NITHdmis\NITHdmis.csproj" />
+    <ProjectReference Include="..\NITHemulation\NITHemulation.csproj" />
     <ProjectReference Include="..\NITHlibrary\NITHlibrary.csproj" />
   </ItemGroup>
 

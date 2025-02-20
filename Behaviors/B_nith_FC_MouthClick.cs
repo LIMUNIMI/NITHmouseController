@@ -1,4 +1,4 @@
-﻿using NITHdmis.Modules.Mouse;
+﻿using NITHemulation.Modules.Mouse;
 using NITHlibrary.Nith.Internals;
 using NITHmouseController.Modules;
 
@@ -17,18 +17,18 @@ public class BNithFcMouthClick : INithSensorBehavior
     {
         if (nithData.ContainsParameters(_requiredParams) && Rack.UserSettings.MouthClicking)
         {
-            var mouthIsOpen = nithData.GetParameter(NithParameters.mouth_isOpen)!.Value.BaseAsBool;
+            var mouthIsOpen = nithData.GetParameterValue(NithParameters.mouth_isOpen)!.Value.BaseAsBool;
             switch (Rack.MappingModule.CurrentClickButton)
             {
                 case ClickButton.Left:
                     if (mouthIsOpen && !_isLeftDown)
                     {
-                        Rack.MouseModule.SendMouseButtonEvent(MouseButtonFlags.LeftDown);
+                        MouseSender.SendMouseButtonEvent(MouseButtonFlags.LeftDown);
                         _isLeftDown = true;
                     }
                     else if (!mouthIsOpen && _isLeftDown)
                     {
-                        Rack.MouseModule.SendMouseButtonEvent(MouseButtonFlags.LeftUp);
+                        MouseSender.SendMouseButtonEvent(MouseButtonFlags.LeftUp);
                         _isLeftDown = false;
                     }
                     break;
@@ -36,12 +36,12 @@ public class BNithFcMouthClick : INithSensorBehavior
                 case ClickButton.Right:
                     if (mouthIsOpen && !_isRightDown)
                     {
-                        Rack.MouseModule.SendMouseButtonEvent(MouseButtonFlags.RightDown);
+                        MouseSender.SendMouseButtonEvent(MouseButtonFlags.RightDown);
                         _isRightDown = true;
                     }
                     else if (!mouthIsOpen && _isRightDown)
                     {
-                        Rack.MouseModule.SendMouseButtonEvent(MouseButtonFlags.RightUp);
+                        MouseSender.SendMouseButtonEvent(MouseButtonFlags.RightUp);
                         _isRightDown = false;
                     }
                     break;

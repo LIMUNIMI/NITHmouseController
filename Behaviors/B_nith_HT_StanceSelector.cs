@@ -11,7 +11,7 @@ namespace NITHmouseController.Behaviors
         {
             if(nithData.ContainsParameters(_requiredParameters))
             {
-                var roll = nithData.GetParameter(NithParameters.head_pos_roll).Value.BaseAsDouble;
+                var roll = nithData.GetParameterValue(NithParameters.head_pos_roll).Value.BaseAsDouble;
                 
                 if(roll > Rack.MappingModule.StanceThreshold)
                 {

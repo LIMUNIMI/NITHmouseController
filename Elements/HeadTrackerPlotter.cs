@@ -236,16 +236,16 @@ namespace NITHmouseController.Elements
         {
             if (nithData.ContainsParameters(_requiredArgsPos))
             {
-                _posPitch = nithData.GetParameter(NithParameters.head_pos_pitch).Value.BaseAsDouble;
-                _posYaw = nithData.GetParameter(NithParameters.head_pos_yaw).Value.BaseAsDouble;
-                _posRoll = nithData.GetParameter(NithParameters.head_pos_roll).Value.BaseAsDouble;
+                _posPitch = nithData.GetParameterValue(NithParameters.head_pos_pitch).Value.BaseAsDouble;
+                _posYaw = nithData.GetParameterValue(NithParameters.head_pos_yaw).Value.BaseAsDouble;
+                _posRoll = nithData.GetParameterValue(NithParameters.head_pos_roll).Value.BaseAsDouble;
             }
 
             if (nithData.ContainsParameters(_requiredArgsAcc))
             {
-                _accPitch = nithData.GetParameter(NithParameters.head_acc_pitch).Value.BaseAsDouble;
-                _accYaw = nithData.GetParameter(NithParameters.head_acc_yaw).Value.BaseAsDouble;
-                _accRoll = nithData.GetParameter(NithParameters.head_acc_roll).Value.BaseAsDouble;
+                _accPitch = nithData.GetParameterValue(NithParameters.head_acc_pitch).Value.BaseAsDouble;
+                _accYaw = nithData.GetParameterValue(NithParameters.head_acc_yaw).Value.BaseAsDouble;
+                _accRoll = nithData.GetParameterValue(NithParameters.head_acc_roll).Value.BaseAsDouble;
             }
         }
     }

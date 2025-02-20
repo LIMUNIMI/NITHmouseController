@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Forms;
 using NITHlibrary.Tools.Mappers;
 
 namespace NITHmouseController.Elements
@@ -19,9 +18,8 @@ namespace NITHmouseController.Elements
         
         public MouseCalibratorTwoEdgesMethod()
         {
-            var screen = Screen.PrimaryScreen;
-            ScreenWidth = screen.Bounds.Width;
-            ScreenHeight = screen.Bounds.Height;
+            ScreenWidth = (int)SystemParameters.PrimaryScreenWidth;
+            ScreenHeight = (int)SystemParameters.PrimaryScreenHeight;
             Remap();
         }
 
