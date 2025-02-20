@@ -6,7 +6,7 @@ _An application for mouse control using NITHsensors_
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/LIMUNIMI/NITHmouseController/refs/heads/main/Readme_Images/GUI.png" width="300px%" />
+  <img src="https://raw.githubusercontent.com/LIMUNIMI/NITHmouseController/refs/heads/main/Readme_Images/GUI.png" width="75%" />
 </p>
 
 
