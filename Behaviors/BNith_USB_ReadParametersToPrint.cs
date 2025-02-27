@@ -3,7 +3,7 @@ using NITHlibrary.Nith.Internals;
 
 namespace NITHmouseController.Behaviors
 {
-    internal class BNithHtReadValuesToPrint : INithSensorBehavior
+    internal class BNith_USB_ReadParametersToPrint : INithSensorBehavior
     {
         private const int MinArgLength = 15;
         private string _argumentStr = "";
@@ -18,7 +18,7 @@ namespace NITHmouseController.Behaviors
             {
                 foreach (NithParameterValue val in nithData.Values)
                 {
-                    _argumentStr += AddWhiteSpaces(val.Normalized.ToString());
+                    _argumentStr += AddWhiteSpaces(val.Parameter.ToString());
                     _argumentStr += "v: ";
                     if (val.Type == NithDataTypes.OnlyBase)
                     {

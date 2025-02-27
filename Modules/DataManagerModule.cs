@@ -8,8 +8,8 @@
         public string FaceCamArgumentsString { get; set; }
         public string FaceCamErrorsString { get; private set; } = "";
         public string FaceCamRawString { get; private set; } = "";
-        public string FaceCamSensorName { get; set; } = "";
-        public string FaceCamStatusCode { get; set; } = "";
+        public string UDPsensorName { get; set; } = "";
+        public string UDPstatusCode { get; set; } = "";
         public string HeadTrackerArgumentsString { get; set; }
         public string HeadTrackerErrorsString { get; private set; } = "";
         public string HeadTrackerRawString { get; private set; } = "";

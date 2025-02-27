@@ -3,7 +3,7 @@ using NITHlibrary.Nith.Internals;
 
 namespace NITHmouseController.Behaviors
 {
-    internal class BNithFcReadValuesToPrint : INithSensorBehavior
+    internal class BNith_UDP_ReadParametersToPrint : INithSensorBehavior
     {
         private const int MinArgLength = 15;
         private string _argumentStr = "";
@@ -11,8 +11,8 @@ namespace NITHmouseController.Behaviors
         public void HandleData(NithSensorData nithData)
         {
 
-            Rack.DataManagerModule.FaceCamSensorName = nithData.SensorName + "-" + nithData.Version;
-            Rack.DataManagerModule.FaceCamStatusCode = nithData.StatusCode.ToString();
+            Rack.DataManagerModule.UDPsensorName = nithData.SensorName + "-" + nithData.Version;
+            Rack.DataManagerModule.UDPstatusCode = nithData.StatusCode.ToString();
 
             _argumentStr = "";
             if(nithData.Values != null)

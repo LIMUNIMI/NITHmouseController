@@ -1,8 +1,9 @@
-﻿using System.Windows.Controls;
+﻿using NITHlibrary.Nith.Internals;
+using NITHlibrary.Tools.Filters.ValueFilters;
+using NITHmouseController.Modules;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using NITHlibrary.Nith.Internals;
-using NITHlibrary.Tools.Filters.ValueFilters;
 
 namespace NITHmouseController.Elements
 {
@@ -21,7 +22,6 @@ namespace NITHmouseController.Elements
         private double _posPitch = 0;
         private double _posRoll = 0;
         private double _posYaw = 0;
-
         private List<NithParameters> _requiredArgsAcc = new List<NithParameters>
         {
             NithParameters.head_acc_pitch, NithParameters.head_acc_yaw, NithParameters.head_acc_roll
@@ -55,43 +55,46 @@ namespace NITHmouseController.Elements
 
         public void HandleData(NithSensorData nithData)
         {
-            switch (VisualizationMode)
+            if (true) // DEPRECATED: Check if the head source is the one this module is bound to, activate only if it is
             {
-                case HTvisualizationModes.Position:
-                    if (nithData.ContainsParameters(_requiredArgsPos) && Enabled)
-                    {
-                        // Get positions
-                        _posPitch = nithData.GetParameterValue(NithParameters.head_pos_pitch).Value.BaseAsDouble;
-                        _posYaw = nithData.GetParameterValue(NithParameters.head_pos_yaw).Value.BaseAsDouble;
-                        _posRoll = nithData.GetParameterValue(NithParameters.head_pos_roll).Value.BaseAsDouble;
+                switch (VisualizationMode)
+                {
+                    case HTvisualizationModes.Position:
+                        if (nithData.ContainsParameters(_requiredArgsPos) && Enabled)
+                        {
+                            // Get positions
+                            _posPitch = nithData.GetParameterValue(NithParameters.head_pos_pitch).Value.BaseAsDouble;
+                            _posYaw = nithData.GetParameterValue(NithParameters.head_pos_yaw).Value.BaseAsDouble;
+                            _posRoll = nithData.GetParameterValue(NithParameters.head_pos_roll).Value.BaseAsDouble;
 
-                        // Filter position
-                        PitchFilter.Push(_posPitch);
-                        YawFilter.Push(_posYaw);
-                        RollFilter.Push(_posRoll);
-                        _posPitch = -PitchFilter.Pull(); // Inverted because... I don't know. It works.
-                        _posYaw = YawFilter.Pull();
-                        _posRoll = RollFilter.Pull();
+                            // Filter position
+                            PitchFilter.Push(_posPitch);
+                            YawFilter.Push(_posYaw);
+                            RollFilter.Push(_posRoll);
+                            _posPitch = -PitchFilter.Pull(); // Inverted because... I don't know. It works.
+                            _posYaw = YawFilter.Pull();
+                            _posRoll = RollFilter.Pull();
 
-                        // Compute normalized positions relative to screen
-                        _normalizedPosPitch = (_cnvPlot.ActualHeight / 2) + (_posPitch / (DefaultRadius * 2) * _cnvPlot.ActualHeight * PitchMultiplier);
-                        _normalizedPosYaw = (_cnvPlot.ActualWidth / 2) + (_posYaw / (DefaultRadius * 2) * _cnvPlot.ActualWidth * YawMultiplier);
-                        _normalizedPosRoll = (_cnvPlot.ActualWidth / 2) + (_posRoll / (DefaultRadius * 2) * _cnvPlot.ActualWidth * RollMultiplier);
-                        
-                        // Set height subtracting from height
-                        _normalizedPosPitch = _cnvPlot.Height - _normalizedPosPitch;
-                    }
-                    break;
+                            // Compute normalized positions relative to screen
+                            _normalizedPosPitch = (_cnvPlot.ActualHeight / 2) + (_posPitch / (DefaultRadius * 2) * _cnvPlot.ActualHeight * PitchMultiplier);
+                            _normalizedPosYaw = (_cnvPlot.ActualWidth / 2) + (_posYaw / (DefaultRadius * 2) * _cnvPlot.ActualWidth * YawMultiplier);
+                            _normalizedPosRoll = (_cnvPlot.ActualWidth / 2) + (_posRoll / (DefaultRadius * 2) * _cnvPlot.ActualWidth * RollMultiplier);
 
-                case HTvisualizationModes.Acceleration:
-                    if (nithData.ContainsParameters(_requiredArgsAcc) && Enabled)
-                    {
-                        // Get accelerations
-                        _accPitch = nithData.GetParameterValue(NithParameters.head_acc_pitch).Value.BaseAsDouble;
-                        _accYaw = nithData.GetParameterValue(NithParameters.head_acc_yaw).Value.BaseAsDouble;
-                        _accRoll = nithData.GetParameterValue(NithParameters.head_acc_roll).Value.BaseAsDouble;
-                    }
-                    break;
+                            // Set height subtracting from height
+                            _normalizedPosPitch = _cnvPlot.Height - _normalizedPosPitch;
+                        }
+                        break;
+
+                    case HTvisualizationModes.Acceleration:
+                        if (nithData.ContainsParameters(_requiredArgsAcc) && Enabled)
+                        {
+                            // Get accelerations
+                            _accPitch = nithData.GetParameterValue(NithParameters.head_acc_pitch).Value.BaseAsDouble;
+                            _accYaw = nithData.GetParameterValue(NithParameters.head_acc_yaw).Value.BaseAsDouble;
+                            _accRoll = nithData.GetParameterValue(NithParameters.head_acc_roll).Value.BaseAsDouble;
+                        }
+                        break;
+                }
             }
         }
 

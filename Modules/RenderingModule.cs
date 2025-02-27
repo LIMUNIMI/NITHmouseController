@@ -46,21 +46,24 @@ namespace NITHmouseController.Modules
         /// </summary>
         private void DispatcherUpdate(object sender, EventArgs e)
         {
-            AppWindow.txtConnectedHT.Text = Rack.UsBreceiver.IsConnected ? "Connected" : "Not Connected";
-            AppWindow.txtConnectedFC.Text = Rack.UDPreceiverFaceCam.IsConnected ? "Connected" : "Not Connected";
-            AppWindow.txtPortHT.Text = Rack.UsBreceiver.Port.ToString();
+            AppWindow.txtConnectedHT.Text = Rack.USBreceiver.IsConnected ? "Connected" : "Not Connected";
+            AppWindow.txtConnectedFC.Text = Rack.UDPreceiver.IsConnected ? "Connected" : "Not Connected";
+            AppWindow.txtPortHT.Text = Rack.USBreceiver.Port.ToString();
             AppWindow.txtValuesHT.Text = Rack.DataManagerModule.HeadTrackerArgumentsString;
             AppWindow.txtValuesFC.Text = Rack.DataManagerModule.FaceCamArgumentsString;
-            AppWindow.indCalibrated.Fill = Rack.MouseCalibratorTwoEdgesMethod.Calibrated ? Rack.YesBrush : Rack.NoBrush;
+            AppWindow.indHTconnected.Fill = Rack.USBreceiver.IsConnected ? Rack.YesBrush : Rack.NoBrush;
             AppWindow.indEmulateClicks.Fill = Rack.UserSettings.BlinkClicking ? Rack.YesBrush : Rack.NoBrush;
             AppWindow.indEmulateCursor.Fill = Rack.UserSettings.EmulateCursor ? Rack.YesBrush : Rack.NoBrush;
             AppWindow.ellEyeLeft.Fill = IsLeftEyeOpen ? Rack.EmptyBrush: Rack.FullBrush;
             AppWindow.ellEyeRight.Fill = IsRightEyeOpen ? Rack.EmptyBrush : Rack.FullBrush;
             AppWindow.ellMouth.Fill = IsMouthOpen ? Rack.EmptyBrush : new SolidColorBrush(Colors.DarkRed);
             AppWindow.txtSensitivity.Text = Rack.UserSettings.HtSensitivity.ToString("F0");
-            AppWindow.indFCconnected.Fill = Rack.UDPreceiverFaceCam.IsConnected ? Rack.YesBrush : Rack.NoBrush;
+            AppWindow.indFCconnected.Fill = Rack.UDPreceiver.IsConnected ? Rack.YesBrush : Rack.NoBrush;
             AppWindow.indMouthClicking.Fill = Rack.UserSettings.MouthClicking ? Rack.YesBrush : Rack.NoBrush;
-            AppWindow.txtFilter.Text = Rack.EmulateMouseCursorBehavior.FilterXAlpha.ToString("F2");
+            AppWindow.txtFilter.Text = Rack.BNith_Head_EmulateCursor.FilterXAlpha.ToString("F2");
+
+            AppWindow.indHeadSourceUDP.Fill = Rack.MappingModule.HeadSource == HeadSources.UDP ? Rack.YesBrush : Rack.NoBrush;
+            AppWindow.indHeadSourceUSB.Fill = Rack.MappingModule.HeadSource == HeadSources.USB ? Rack.YesBrush : Rack.NoBrush;
 
             switch (Rack.MappingModule.CurrentClickButton)
             {
@@ -73,7 +76,7 @@ namespace NITHmouseController.Modules
             }
 
             // Update graphics of Head tracker plotter
-            Rack.HeadTrackerPlotterNoElements.UpdateGraphics();
+            Rack.B_HeadTrackerPlotter.UpdateGraphics();
         }
     }
 }

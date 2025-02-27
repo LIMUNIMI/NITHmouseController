@@ -3,7 +3,7 @@ using NITHmouseController.Modules;
 
 namespace NITHmouseController.Behaviors
 {
-    public class BNithHtStanceSelector : INithSensorBehavior
+    public class BNith_Head_StanceSelector : INithSensorBehavior
     {
         private readonly List<NithParameters> _requiredParameters = [NithParameters.head_pos_roll];
 

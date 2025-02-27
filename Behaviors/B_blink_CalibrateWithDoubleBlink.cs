@@ -12,7 +12,8 @@ namespace NITHmouseController.Behaviors
 
         protected override void Event_doubleClose()
         {
-            Rack.NithPreprocessorHeadTrackerCalibrator.SetCenterToCurrentPosition();
+            Rack.NithPreprocessorHeadTrackerCalibratorUSB.SetCenterToCurrentPosition();
+            Rack.NithPreprocessorHeadTrackerCalibratorUDP.SetCenterToCurrentPosition();
         }
 
         protected override void Event_doubleOpen()
