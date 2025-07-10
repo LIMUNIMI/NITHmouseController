@@ -3,7 +3,7 @@ using NITHlibrary.Nith.Internals;
 
 namespace NITHmouseController.Behaviors
 {
-    internal class BNith_UDP_ReadParametersToPrint : INithSensorBehavior
+    internal class BNithFcReadValuesToPrint : INithSensorBehavior
     {
         private const int MinArgLength = 15;
         private string _argumentStr = "";
@@ -11,8 +11,8 @@ namespace NITHmouseController.Behaviors
         public void HandleData(NithSensorData nithData)
         {
 
-            Rack.DataManagerModule.UDPsensorName = nithData.SensorName + "-" + nithData.Version;
-            Rack.DataManagerModule.UDPstatusCode = nithData.StatusCode.ToString();
+            Rack.DataManagerModule.FaceCamSensorName = nithData.SensorName + "-" + nithData.Version;
+            Rack.DataManagerModule.FaceCamStatusCode = nithData.StatusCode.ToString();
 
             _argumentStr = "";
             if(nithData.Values != null)
@@ -21,13 +21,13 @@ namespace NITHmouseController.Behaviors
                 {
                     _argumentStr += AddWhiteSpaces(val.Parameter.ToString());
                     _argumentStr += "v: ";
-                    if (val.DataType == NithDataTypes.OnlyValue)
+                    if (val.Type == NithDataTypes.OnlyBase)
                     {
-                        _argumentStr += val.Value;
+                        _argumentStr += val.Base;
                     }
-                    else if (val.DataType == NithDataTypes.Range)
+                    else if (val.Type == NithDataTypes.BaseAndMax)
                     {
-                        _argumentStr += val.Value + " / " + val.Max + "\tp: " + val.Normalized.ToString("F2");
+                        _argumentStr += val.Base + " / " + val.Max + "\tp: " + val.Normalized.ToString("F2");
                     }
                     _argumentStr += "\n";
                 }
